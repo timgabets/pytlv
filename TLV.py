@@ -1,3 +1,5 @@
 #!/usr/bin/env python
 
-print('parser')
+class TLV:
+	def parse(self, data):
+		return None
