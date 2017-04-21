@@ -46,6 +46,10 @@ class TestHexify(unittest.TestCase):
     def test_hexify_zero(self):
         self.assertEqual(hexify(0), '00')
 
+    def test_hexify_negative(self):
+        with self.assertRaisesRegex(ValueError, 'Invalid number to hexify - must be positive'):
+            hexify(-3)
+
     def test_hexify_positive_integer_less_than_16(self):
         self.assertEqual(hexify(12), '0C')
 

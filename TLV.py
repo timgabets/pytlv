@@ -7,6 +7,9 @@ def hexify(number):
 	"""
 	Convert integer to hex string representation, e.g. 12 to '0C'
 	"""
+	if number < 0:
+		raise ValueError('Invalid number to hexify - must be positive')
+
 	result = hex(int(number)).replace('0x', '').upper()
 	if divmod(len(result), 2)[1] == 1:
 		# Padding
