@@ -27,6 +27,8 @@ class TestTLV(unittest.TestCase):
     """
     tlv.build()
     """
+    def test_tlv_build_empty_dict(self):
+        self.assertEqual(self.tlv.build({}), '')   
 
 if __name__ == '__main__':
     unittest.main()
