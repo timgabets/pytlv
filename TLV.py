@@ -59,6 +59,9 @@ class TLV:
 		"""
 		self.tlv_string = ''
 		for tag, value in data_dict.items():
+			if divmod(len(value), 2)[1] == 1:
+				raise ValueError('Invalid value length - the length must be even')
+
 			self.tlv_string = self.tlv_string + tag.upper() + hexify(len(value) / 2) + value.upper()
 
 		return self.tlv_string
