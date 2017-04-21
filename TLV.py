@@ -3,6 +3,17 @@
 import binascii
 from collections import OrderedDict
 
+def hexify(number):
+	"""
+	Convert integer to hex string representation, e.g. 12 to '0C'
+	"""
+	result = hex(number).replace('0x', '').upper()
+	if divmod(len(result), 2)[1] == 1:
+		# Padding
+		result = '0{}'.format(result)
+	return result
+
+
 class TLV:
 
 	def __init__(self, tags):
@@ -45,4 +56,13 @@ class TLV:
 
 	def build(self, data_dict):
 		self.tlv_string = ''
+
+		for tag, value in data_dict.items():
+
+			value_len = hex(len(value))
+			#print(binascii.hexlify(value_len))
+
+			self.tlv_string = self.tlv_string + tag.upper() + value.upper()
+
+
 		return self.tlv_string

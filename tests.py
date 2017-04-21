@@ -28,7 +28,28 @@ class TestTLV(unittest.TestCase):
     tlv.build()
     """
     def test_tlv_build_empty_dict(self):
-        self.assertEqual(self.tlv.build({}), '')   
+        self.assertEqual(self.tlv.build({}), '')
+
+    #def test_tlv_build_empty_dict(self):
+    #    self.assertEqual(self.tlv.build({'9f02': '000000001337'}), '9F020C000000001337')
+
+
+class TestHexify(unittest.TestCase):
+
+    def SetUp(self):
+        pass
+
+    def test_hexify_zero(self):
+        self.assertEqual(hexify(0), '00')
+
+    def test_hexify_positive_integer_less_than_16(self):
+        self.assertEqual(hexify(12), '0C')
+
+    def test_hexify_255(self):
+        self.assertEqual(hexify(255), 'FF')
+
+    def test_hexify_positive_integer_greater_than_256(self):
+        self.assertEqual(hexify(730), '02DA')
 
 if __name__ == '__main__':
     unittest.main()
