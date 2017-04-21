@@ -7,6 +7,9 @@ class TestTLV(unittest.TestCase):
     def setUp(self):
         self.tlv = TLV(['84', 'A5', '9F02'])
 
+    """
+    tlv.parse()
+    """
     def test_tlv_parse_empty_string(self):
         self.assertEqual(self.tlv.parse(''), {})
 
@@ -21,6 +24,9 @@ class TestTLV(unittest.TestCase):
             self.tlv.parse('9F03')
 
 
+    """
+    tlv.build()
+    """
 
 if __name__ == '__main__':
     unittest.main()

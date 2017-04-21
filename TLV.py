@@ -4,6 +4,7 @@ import binascii
 from collections import OrderedDict
 
 class TLV:
+
 	def __init__(self, tags):
 		self.tags = tags
 		
@@ -11,7 +12,10 @@ class TLV:
 		for tag in self.tags:
 			self.tag_lengths.add(len(tag))
 
+
 	def parse(self, tlv_string):
+		"""
+		"""
 		parsed_data = OrderedDict()
 
 		i = 0
@@ -34,6 +38,8 @@ class TLV:
 
 			if not tag_found:
 				raise ValueError('Unkown tag')
-
-
 		return parsed_data
+
+
+	def build(self):
+		pass
