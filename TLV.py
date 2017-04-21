@@ -7,7 +7,7 @@ def hexify(number):
 	"""
 	Convert integer to hex string representation, e.g. 12 to '0C'
 	"""
-	result = hex(number).replace('0x', '').upper()
+	result = hex(int(number)).replace('0x', '').upper()
 	if divmod(len(result), 2)[1] == 1:
 		# Padding
 		result = '0{}'.format(result)
@@ -55,8 +55,10 @@ class TLV:
 
 
 	def build(self, data_dict):
+		"""
+		"""
 		self.tlv_string = ''
 		for tag, value in data_dict.items():
-			self.tlv_string = self.tlv_string + tag.upper() + hexify(len(value)) + value.upper()
+			self.tlv_string = self.tlv_string + tag.upper() + hexify(len(value) / 2) + value.upper()
 
 		return self.tlv_string
