@@ -16,6 +16,8 @@ class TLV:
 
 		i = 0
 		while i < len(tlv_string): 
+			tag_found = False
+
 			for tag_length in self.tag_lengths:
 				for tag in self.tags:
 					if tlv_string[i:i+tag_length] == tag:
@@ -28,6 +30,10 @@ class TLV:
 						parsed_data[tag] = value
 
 						i = value_end_position
+						tag_found = True
+
+			if not tag_found:
+				raise ValueError('Unkown tag')
 
 
 		return parsed_data
