@@ -14,12 +14,20 @@ class TLV:
 	def parse(self, tlv_string):
 		parsed_data = OrderedDict()
 
-		for i in range(len(tlv_string)):
+		i = 0
+		while i < len(tlv_string): 
 			for tag_length in self.tag_lengths:
 				for tag in self.tags:
 					if tlv_string[i:i+tag_length] == tag:
 						value_length = int(tlv_string[i+tag_length:i+tag_length+2], 16)
-						value = tlv_string[i+tag_length+2 : i+tag_length+2+value_length*2]
+
+						value_start_position = i+tag_length+2
+						value_end_position = i+tag_length+2+value_length*2
+
+						value = tlv_string[value_start_position:value_end_position]
 						parsed_data[tag] = value
+
+						i = value_end_position
+
 
 		return parsed_data

@@ -11,7 +11,12 @@ class TestTLV(unittest.TestCase):
         self.assertEqual(self.tlv.parse(''), {})
 
     def test_tlv_parse_84_A5(self):
-        self.assertEqual(self.tlv.parse('840E315041592E5359532E4444463031A5088801025F2D02656E'), {'84': '315041592E5359532E4444463031', 'A5': '8801025F2D02656E'})        
+        self.assertEqual(self.tlv.parse('840E315041592E5359532E4444463031A5088801025F2D02656E'), {'84': '315041592E5359532E4444463031', 'A5': '8801025F2D02656E'})
+
+    def test_tlv_parse_nested_tags(self):
+        self.assertEqual(self.tlv.parse('84028484A502A5A5'), {'84': '8484', 'A5': 'A5A5'})        
+
+
 
 if __name__ == '__main__':
     unittest.main()
