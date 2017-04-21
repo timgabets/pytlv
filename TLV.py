@@ -56,13 +56,7 @@ class TLV:
 
 	def build(self, data_dict):
 		self.tlv_string = ''
-
 		for tag, value in data_dict.items():
-
-			value_len = hex(len(value))
-			#print(binascii.hexlify(value_len))
-
-			self.tlv_string = self.tlv_string + tag.upper() + value.upper()
-
+			self.tlv_string = self.tlv_string + tag.upper() + hexify(len(value)) + value.upper()
 
 		return self.tlv_string

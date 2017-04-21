@@ -30,8 +30,8 @@ class TestTLV(unittest.TestCase):
     def test_tlv_build_empty_dict(self):
         self.assertEqual(self.tlv.build({}), '')
 
-    #def test_tlv_build_empty_dict(self):
-    #    self.assertEqual(self.tlv.build({'9f02': '000000001337'}), '9F020C000000001337')
+    def test_tlv_build_empty_dict(self):
+        self.assertEqual(self.tlv.build({'9f02': '000000001337'}), '9F020C000000001337')
 
 
 class TestHexify(unittest.TestCase):
