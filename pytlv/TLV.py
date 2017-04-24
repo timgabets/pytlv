@@ -244,12 +244,12 @@ class TLV:
 		return self.tlv_string
 
 
-	def dump(self, data_dict):
+	def dump(self, data_dict, left_indent='', desc_column_width=48):
 		"""
 		Trace the parsed data from tags_dict
 		"""
 		dump = ''
 		for tag, value in data_dict.items():
-			dump = dump + '[' + tag.upper().rjust(4, ' ') + '] [' + self.tags[tag.upper()][:48].rjust(48, ' ') + ']:\t[' + value + ']\n'
+			dump = dump + left_indent + '[' + tag.upper().rjust(4, ' ') + '] [' + self.tags[tag.upper()][:desc_column_width].rjust(desc_column_width, ' ') + ']:\t[' + value + ']\n'
 
 		return dump
