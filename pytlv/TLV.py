@@ -64,6 +64,9 @@ class TLV:
 		"""
 		self.tlv_string = ''
 		for tag, value in data_dict.items():
+			if not value:
+				return self.tlv_string
+
 			if divmod(len(value), 2)[1] == 1:
 				raise ValueError('Invalid value length - the length must be even')
 

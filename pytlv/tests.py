@@ -37,6 +37,11 @@ class TestTLV(unittest.TestCase):
     def test_tlv_build_empty_dict(self):
         self.assertEqual(self.tlv.build({'9f02': '000000001337'}), '9F0206000000001337')
 
+    def test_tlv_build_tag_with_empty_data(self):
+        self.assertEqual(self.tlv.build({'9f02': ''}), '')
+
+    def test_tlv_build_tag_without_data(self):
+        self.assertEqual(self.tlv.build({'9f02': None}), '')
 
 class TestHexify(unittest.TestCase):
 
