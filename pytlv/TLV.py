@@ -242,3 +242,14 @@ class TLV:
 			self.tlv_string = self.tlv_string + tag.upper() + hexify(len(value) / 2) + value.upper()
 
 		return self.tlv_string
+
+
+	def dump(self, data_dict):
+		"""
+		Trace the parsed data from tags_dict
+		"""
+		dump = ''
+		for tag, value in data_dict.items():
+			dump = dump + '[' + tag.upper().rjust(4, ' ') + '] [' + self.tags[tag.upper()][:48].rjust(48, ' ') + ']:\t[' + value + ']\n'
+
+		return dump
