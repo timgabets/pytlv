@@ -35,7 +35,7 @@ class TestTLVCustomTags(unittest.TestCase):
         self.assertEqual(self.tlv.parse('84028484A502A5A5'), {'84': '8484', 'A5': 'A5A5'})   
 
     def test_tlv_parse_unknown_tag(self):
-        with self.assertRaisesRegex(ValueError, 'Unkown tag'):
+        with self.assertRaisesRegex(ValueError, 'Unknown tag 9F03'):
             self.tlv.parse('9F03')
 
     def test_tlv_parse_known_tag_no_length_no_value(self):

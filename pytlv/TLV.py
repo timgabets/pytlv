@@ -64,11 +64,8 @@ class TLV:
 						tag_found = True
 
 			if not tag_found:
-				possible_tags = []
-				for tag_length in self.tag_lengths:
-					possible_tags.append(self.tlv_string[i:i+tag_length])
-				msg = 'Unkown tag' + str(possible_tags)
-				raise ValueError('Unkown tag')
+				msg = 'Unknown tag ' + self.tlv_string[i:max(self.tag_lengths)]
+				raise ValueError(msg)
 		return parsed_data
 
 
