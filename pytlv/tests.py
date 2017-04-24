@@ -128,10 +128,10 @@ class TestDump(unittest.TestCase):
         self.assertEqual(self.tlv.dump({}), '')
 
     def test_trace_empty_9f20(self):
-        self.assertEqual(self.tlv.dump({'9f02': '000000001337'}), '[9F02] [                    Amount, Authorised (Numeric)]:\t[000000001337]\n')
+        self.assertEqual(self.tlv.dump({'9f02': '000000001337'}), '[9F02] [                    Amount, Authorised (Numeric)]:[000000001337]\n')
 
     def test_trace_empty_9f20_a5(self):
-        self.assertEqual(self.tlv.dump({'9f02': '000000001337', 'a5': '8801025F2D02656E'}), '[9F02] [                    Amount, Authorised (Numeric)]:\t[000000001337]\n[  A5] [File Control Information (FCI) Proprietary Templ]:\t[8801025F2D02656E]\n')
+        self.assertEqual(self.tlv.dump({'9f02': '000000001337', 'a5': '8801025F2D02656E'}), '[9F02] [                    Amount, Authorised (Numeric)]:[000000001337]\n[  A5] [File Control Information (FCI) Proprietary Templ]:[8801025F2D02656E]\n')
 
 
 if __name__ == '__main__':

@@ -250,6 +250,6 @@ class TLV:
 		"""
 		dump = ''
 		for tag, value in data_dict.items():
-			dump = dump + left_indent + '[' + tag.upper().rjust(4, ' ') + '] [' + self.tags[tag.upper()][:desc_column_width].rjust(desc_column_width, ' ') + ']:\t[' + value + ']\n'
+			dump = dump + left_indent + '[' + tag.upper().rjust(4, ' ') + '] [' + self.tags[tag.upper()][:desc_column_width].rjust(desc_column_width, ' ') + ']:[' + value + ']\n'
 
 		return dump
