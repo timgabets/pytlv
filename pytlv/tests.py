@@ -14,8 +14,8 @@ class TestTLVKnownTags(unittest.TestCase):
     def test_tlv_parse_empty_string(self):
         self.assertEqual(self.tlv.parse(''), {})
 
-#    def test_tlv_parse_84_A5(self):
-#        self.assertEqual(self.tlv.parse('820200009A03170424950500000000009F100200009F2608B3336140668238F59F360200019F370472199A459F1A020643'), {'84': '315041592E5359532E4444463031', 'A5': '8801025F2D02656E'})
+    #def test_tlv_parse_84_A5(self):
+    #    self.assertEqual(self.tlv.parse('820200009A03170424950500000000009F100200009F2608B3336140668238F59F360200019F370472199A459F1A020643'), {'84': '315041592E5359532E4444463031', 'A5': '8801025F2D02656E'})
 
 
 class TestTLVCustomTags(unittest.TestCase):
@@ -35,7 +35,7 @@ class TestTLVCustomTags(unittest.TestCase):
         self.assertEqual(self.tlv.parse('84028484A502A5A5'), {'84': '8484', 'A5': 'A5A5'})   
 
     def test_tlv_parse_unknown_tag(self):
-        with self.assertRaisesRegex(ValueError, 'Unknown tag 9F03'):
+        with self.assertRaisesRegex(ValueError, 'Unknown tag found: 9F03'):
             self.tlv.parse('9F03')
 
     def test_tlv_parse_known_tag_no_length_no_value(self):

@@ -3,7 +3,7 @@
 import binascii
 from collections import OrderedDict
 
-known_tags = ['8A', '95', '9A', '9F10', '9F26', '9F36']
+known_tags = ['82', '8A', '95', '9A', '9F10', '9F26', '9F36']
 
 def hexify(number):
 	"""
@@ -64,7 +64,7 @@ class TLV:
 						tag_found = True
 
 			if not tag_found:
-				msg = 'Unknown tag ' + self.tlv_string[i:max(self.tag_lengths)]
+				msg = 'Unknown tag found: ' + self.tlv_string[i:i+10]
 				raise ValueError(msg)
 		return parsed_data
 
