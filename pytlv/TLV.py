@@ -54,6 +54,9 @@ class TLV:
 						value_start_position = i+tag_length+2
 						value_end_position = i+tag_length+2+value_length*2
 
+						if value_end_position > len(self.tlv_string):
+							raise ValueError('Parse error: tag ' + tag + ' declared data of length ' + str(value_length) + ', but actual data length is ' + str(int(len(self.tlv_string[value_start_position-1:-1])/2)))
+
 						value = self.tlv_string[value_start_position:value_end_position]
 						parsed_data[tag] = value
 

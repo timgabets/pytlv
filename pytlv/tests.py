@@ -42,6 +42,18 @@ class TestTLVCustomTags(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Parse error: tag 9F02 has incorrect data length'):
             self.tlv.parse('9F02')
 
+    def test_tlv_parse_known_tag_no_length_0(self):
+        with self.assertRaisesRegex(ValueError, 'Parse error: tag 9F02 declared data of length 4, but actual data length is 0'):
+            self.tlv.parse('9F0204')
+
+    def test_tlv_parse_known_tag_no_length_2(self):
+        with self.assertRaisesRegex(ValueError, 'Parse error: tag 9F02 declared data of length 4, but actual data length is 2'):
+            self.tlv.parse('9F02040102')
+
+    def test_tlv_parse_known_tag_no_length_4(self):
+        with self.assertRaisesRegex(ValueError, 'Parse error: tag 9F02 declared data of length 4, but actual data length is 3'):
+            self.tlv.parse('9F0204010203')
+
     """
     tlv.build()
     """
