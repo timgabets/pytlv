@@ -3,7 +3,7 @@ TLV parser
 
 To import the pytlv module in your code:
 ```python
-from pytlv import *
+from pytlv.TLV import *
 
 ```
 
