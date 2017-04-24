@@ -1,1 +1,1 @@
-__all__ = ['TLV']
+__all__ = ['TLV', 'known_tags']

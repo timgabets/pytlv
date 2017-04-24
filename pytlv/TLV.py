@@ -3,6 +3,8 @@
 import binascii
 from collections import OrderedDict
 
+known_tags = ['8A', '95', '9A']
+
 def hexify(number):
 	"""
 	Convert integer to hex string representation, e.g. 12 to '0C'

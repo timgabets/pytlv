@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='pytlv',
-      version='0.6',
+      version='0.61',
       
       description='TLV(tag length lavue) data parser',
       long_description=open('README.md').read(),
