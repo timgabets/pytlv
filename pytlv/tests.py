@@ -3,7 +3,22 @@
 import unittest
 from TLV import *
 
-class TestTLV(unittest.TestCase):
+
+class TestTLVKnownTags(unittest.TestCase):
+    def setUp(self):
+        self.tlv = TLV()
+
+    """
+    tlv.parse()
+    """
+    def test_tlv_parse_empty_string(self):
+        self.assertEqual(self.tlv.parse(''), {})
+
+#    def test_tlv_parse_84_A5(self):
+#        self.assertEqual(self.tlv.parse('820200009A03170424950500000000009F100200009F2608B3336140668238F59F360200019F370472199A459F1A020643'), {'84': '315041592E5359532E4444463031', 'A5': '8801025F2D02656E'})
+
+
+class TestTLVCustomTags(unittest.TestCase):
     def setUp(self):
         self.tlv = TLV(['84', 'A5', '9F02'])
 
@@ -23,6 +38,9 @@ class TestTLV(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Unkown tag'):
             self.tlv.parse('9F03')
 
+    def test_tlv_parse_known_tag_no_length_no_value(self):
+        with self.assertRaisesRegex(ValueError, 'Parse error: tag 9F02 has incorrect data length'):
+            self.tlv.parse('9F02')
 
     """
     tlv.build()
@@ -42,6 +60,7 @@ class TestTLV(unittest.TestCase):
 
     def test_tlv_build_tag_without_data(self):
         self.assertEqual(self.tlv.build({'9f02': None}), '')
+
 
 class TestHexify(unittest.TestCase):
 

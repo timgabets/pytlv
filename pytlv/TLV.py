@@ -3,7 +3,7 @@
 import binascii
 from collections import OrderedDict
 
-known_tags = ['8A', '95', '9A']
+known_tags = ['8A', '95', '9A', '9F10', '9F26', '9F36']
 
 def hexify(number):
 	"""
@@ -21,8 +21,11 @@ def hexify(number):
 
 class TLV:
 
-	def __init__(self, tags):
-		self.tags = tags
+	def __init__(self, tags=None):
+		if tags:
+			self.tags = tags
+		else:
+			self.tags = known_tags
 		self.tlv_string = ''
 		
 		self.tag_lengths = set()
@@ -43,7 +46,10 @@ class TLV:
 			for tag_length in self.tag_lengths:
 				for tag in self.tags:
 					if self.tlv_string[i:i+tag_length] == tag:
-						value_length = int(self.tlv_string[i+tag_length:i+tag_length+2], 16)
+						try:
+							value_length = int(self.tlv_string[i+tag_length:i+tag_length+2], 16)
+						except ValueError:
+							raise ValueError('Parse error: tag ' + tag + ' has incorrect data length')
 
 						value_start_position = i+tag_length+2
 						value_end_position = i+tag_length+2+value_length*2
@@ -55,6 +61,10 @@ class TLV:
 						tag_found = True
 
 			if not tag_found:
+				possible_tags = []
+				for tag_length in self.tag_lengths:
+					possible_tags.append(self.tlv_string[i:i+tag_length])
+				msg = 'Unkown tag' + str(possible_tags)
 				raise ValueError('Unkown tag')
 		return parsed_data
 
