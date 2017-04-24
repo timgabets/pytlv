@@ -2,6 +2,7 @@
 
 import unittest
 from TLV import *
+from collections import OrderedDict
 
 
 class TestTLVKnownTags(unittest.TestCase):
@@ -15,10 +16,13 @@ class TestTLVKnownTags(unittest.TestCase):
         self.assertEqual(self.tlv.parse(''), {})
 
     #def test_tlv_parse_84_A5(self):
-    #    self.assertEqual(self.tlv.parse('820200009A03170424950500000000009F100200009F2608B3336140668238F59F360200019F370472199A459F1A020643'), {'84': '315041592E5359532E4444463031', 'A5': '8801025F2D02656E'})
+    #    self.assertEqual(self.tlv.parse('820200009A03170424950500000000009F100200009F2608B3336140668238F59F360200019F370472199A459F1A020643'), OrderedDict({'82': '0000', '9A': '170424', '95': '0000000000', '9F10': '0000', '9F26': 'B3336140668238F5', '9F36': '0001', '9F37': '72199A45', '9F1A': '0643'}))
+
+    #def test_tlv_parse_84_A5(self):
+    #    self.assertEqual(self.tlv.parse('820200009A0317042495050000000000'), OrderedDict({'82': '0000', '9A': '170424', '95': '0000000000'}))
 
 
-class TestTLVCustomTags(unittest.TestCase):
+class TestTLVCustomTagsList(unittest.TestCase):
     def setUp(self):
         self.tlv = TLV(['84', 'A5', '9F02'])
 
