@@ -266,7 +266,7 @@ class TLV:
 				
 				for j in range(0, 8):
 					if (byte_value >> j & 1) == 1:
-						tvr_dump = tvr_dump + tvr_bit_names[byte][j].rjust(desc_column_width, ' ') + ': [1]\n'
+						tvr_dump = tvr_dump + tvr_bit_names[byte][j][:desc_column_width].rjust(desc_column_width, ' ') + ': [1]\n'
 
 
 		return tvr_dump
@@ -282,6 +282,6 @@ class TLV:
 			# Special tag processing:
 			# TVR
 			if tag == '95':
-				self._parse_tvr(value, desc_column_width=48)
+				print(self._parse_tvr(value, desc_column_width=48))
 
 		return dump

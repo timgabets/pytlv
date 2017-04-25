@@ -77,6 +77,9 @@ class TestTLVKnownTags(unittest.TestCase):
     def test_tlv_parse_tvr_byte1_bit3_and_bit4(self):
         self.assertEqual(self.tlv._parse_tvr('0C00000000', desc_column_width=48), 'Byte 1: [00001100]\n                                      CDA failed: [1]\n                                      DDA failed: [1]\n')
 
+    def test_tlv_parse_tvr_byte1_bit8_byte2_bit8(self):
+        self.assertEqual(self.tlv._parse_tvr('8080000000', desc_column_width=48), 'Byte 1: [10000000]\n       Offline data processing was not performed: [1]\nByte 2: [10000000]\nCard and terminal have different application ver: [1]\n')
+
 
 class TestTLVCustomTagsList(unittest.TestCase):
     def setUp(self):
