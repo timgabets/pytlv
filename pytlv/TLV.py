@@ -251,16 +251,25 @@ class TLV:
 		tvr_dump = ''
 
 		tvr_bit_names = {
-			'byte1': ['RFU', 'Now SDA was selected', 'CDA failed', 'DDA failed', 'Card number appears on hotlist', 'ICC data missing', 'SDA failed', 'Offline data processing was not performed']
+			1: ['RFU', 'Now SDA was selected', 'CDA failed', 'DDA failed', 'Card number appears on hotlist', 'ICC data missing', 'SDA failed', 'Offline data processing was not performed']
 		}
 
 		# Byte 1
-		byte1 = int(tvr[0:2], 16)
-		if byte1 > 0:
-			tvr_dump += 'Byte 1: [{0:b}]\n'.format(byte1)
-			for i in range(0, 8):
-				if (byte1 >> i & 1) == 1:
-					tvr_dump = tvr_dump + tvr_bit_names['byte1'][i] + ': [1]'
+		#byte1 = int(tvr[0:2], 16)
+		#if byte1 > 0:
+		#	tvr_dump += 'Byte 1: [{0:b}]\n'.format(byte1)
+		#	for i in range(0, 8):
+		#		if (byte1 >> i & 1) == 1:
+		#			tvr_dump = tvr_dump + tvr_bit_names['byte1'][i] + ': [1]'
+
+		for byte in range(1, 6):
+			byte_value = int(tvr[byte*2-2:byte*2], 16)
+			if byte_value > 0:
+				tvr_dump = tvr_dump + 'Byte {}:'.format(byte) + ' [{0:b}]\n'.format(byte_value)
+				
+				for j in range(0, 8):
+					if (byte_value >> j & 1) == 1:
+						tvr_dump = tvr_dump + tvr_bit_names[byte][j] + ': [1]\n'
 
 
 		return tvr_dump
