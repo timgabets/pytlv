@@ -244,7 +244,7 @@ class TLV:
 		return self.tlv_string
 
 
-	def _parse_tvr(self, tvr, desc_column_width=48):
+	def _parse_tvr(self, tvr, left_indent='', desc_column_width=48):
 		"""
 		Parse terminal verification results
 		"""
@@ -262,11 +262,11 @@ class TLV:
 			byte_value = int(tvr[byte*2-2:byte*2], 16)
 			if byte_value > 0:
 				byte_value_binary = '{0:b}'.format(byte_value).rjust(8, '0')
-				tvr_dump += 'Byte {}: [{}]\n'.format(byte, byte_value_binary)
+				tvr_dump = tvr_dump + left_indent + 'Byte {}: [{}]\n'.format(byte, byte_value_binary)
 				
 				for j in range(0, 8):
 					if (byte_value >> j & 1) == 1:
-						tvr_dump = tvr_dump + tvr_bit_names[byte][j][:desc_column_width].rjust(desc_column_width, ' ') + ': [1]\n'
+						tvr_dump = tvr_dump + left_indent + tvr_bit_names[byte][j][:desc_column_width].rjust(desc_column_width, ' ') + ': [1]\n'
 
 
 		return tvr_dump
@@ -282,6 +282,6 @@ class TLV:
 			# Special tag processing:
 			# TVR
 			if tag == '95':
-				print(self._parse_tvr(value, desc_column_width=48))
+				print(self._parse_tvr(value, left_indent=left_indent, desc_column_width=48))
 
 		return dump
