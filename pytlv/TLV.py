@@ -244,6 +244,28 @@ class TLV:
 		return self.tlv_string
 
 
+	def _parse_tvr(self, tvr):
+		"""
+		Parse terminal verification results
+		"""
+		tvr_dump = ''
+
+		tvr_bit_names = {
+			'byte1': ['RFU', 'Now SDA was selected', 'CDA failed', 'DDA failed', 'Card number appears on hotlist', 'ICC data missing', 'SDA failed', 'Offline data processing was not performed']
+		}
+
+		# Byte 1
+		byte1 = int(tvr[0:2], 16)
+		if byte1 > 0:
+			tvr_dump += 'Byte 1: [{0:b}]\n'.format(byte1)
+			for i in range(0, 8):
+				if (byte1 >> i & 1) == 1:
+					tvr_dump = tvr_dump + tvr_bit_names['byte1'][i] + ': [1]'
+
+
+		return tvr_dump
+
+
 	def dump(self, data_dict, left_indent='', desc_column_width=48):
 		"""
 		Trace the parsed data from tags_dict
@@ -251,5 +273,9 @@ class TLV:
 		dump = ''
 		for tag, value in data_dict.items():
 			dump = dump + left_indent + '[' + tag.upper().rjust(4, ' ') + '] [' + self.tags[tag.upper()][:desc_column_width].rjust(desc_column_width, ' ') + ']:[' + value + ']\n'
+			# Special tag processing:
+			# TVR
+			if tag == '95':
+				self._parse_tvr(value)
 
 		return dump

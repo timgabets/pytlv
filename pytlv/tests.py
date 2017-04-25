@@ -12,8 +12,11 @@ class TestTLVKnownTags(unittest.TestCase):
     """
     tlv.parse()
     """
-    def test_tlv_parse_empty_string(self):
-        self.assertEqual(self.tlv.parse(''), {})
+    #def test_tlv_parse_empty_string(self):
+    #    self.assertEqual(self.tlv.parse('8C209F02069F03069F1A0295055F2A029A039C019F37049F35019F45029F34039B02'), {})
+
+    def test_tlv_parse_cdol1(self):
+        self.assertEqual(self.tlv.parse(''), {})        
 
     def test_tlv_parse_84_A5(self):
         self.assertEqual(self.tlv.parse('840E315041592E5359532E4444463031A5088801025F2D02656E'), {'84': '315041592E5359532E4444463031', 'A5': '8801025F2D02656E'})
@@ -40,6 +43,16 @@ class TestTLVKnownTags(unittest.TestCase):
     def test_tlv_parse_known_tag_no_length_4(self):
         with self.assertRaisesRegex(ValueError, 'Parse error: tag 9F02 declared data of length 4, but actual data length is 3'):
             self.tlv.parse('9F0204010203')
+
+    """
+    tlv._parse_tvr()
+    """
+    def test_tlv_parse_tvr_all_zeros(self):
+        self.assertEqual(self.tlv._parse_tvr('0000000000'), '')  
+
+    def test_tlv_parse_tvr_byte1_bit8(self):
+        self.assertEqual(self.tlv._parse_tvr('8000000000'), 'Byte 1: [10000000]\nOffline data processing was not performed: [1]')
+
 
 class TestTLVCustomTagsList(unittest.TestCase):
     def setUp(self):
