@@ -51,7 +51,10 @@ class TestTLVKnownTags(unittest.TestCase):
         self.assertEqual(self.tlv._parse_tvr('0000000000'), '')  
 
     def test_tlv_parse_tvr_byte1_bit8(self):
-        self.assertEqual(self.tlv._parse_tvr('8000000000'), 'Byte 1: [10000000]\nOffline data processing was not performed: [1]\n')
+        self.assertEqual(self.tlv._parse_tvr('8000000000'), 'Byte 1: [10000000]\n       Offline data processing was not performed: [1]\n')
+
+    def test_tlv_parse_tvr_byte1_bit7(self):
+        self.assertEqual(self.tlv._parse_tvr('4000000000'), 'Byte 1: [01000000]\n                                      SDA failed: [1]\n')
 
 
 class TestTLVCustomTagsList(unittest.TestCase):
