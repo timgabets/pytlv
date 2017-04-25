@@ -244,12 +244,11 @@ class TLV:
 		return self.tlv_string
 
 
-	def _parse_tvr(self, tvr):
+	def _parse_tvr(self, tvr, desc_column_width=48):
 		"""
 		Parse terminal verification results
 		"""
 		tvr_dump = ''
-		desc_column_width = 48
 
 		tvr_bit_names = {
 			1: ['RFU', 'SDA was selected', 'CDA failed', 'DDA failed', 'Card number appears on hotlist', 'ICC data missing', 'SDA failed', 'Offline data processing was not performed'],
@@ -283,6 +282,6 @@ class TLV:
 			# Special tag processing:
 			# TVR
 			if tag == '95':
-				self._parse_tvr(value)
+				self._parse_tvr(value, desc_column_width=48)
 
 		return dump
