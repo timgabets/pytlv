@@ -56,6 +56,27 @@ class TestTLVKnownTags(unittest.TestCase):
     def test_tlv_parse_tvr_byte1_bit7(self):
         self.assertEqual(self.tlv._parse_tvr('4000000000'), 'Byte 1: [01000000]\n                                      SDA failed: [1]\n')
 
+    def test_tlv_parse_tvr_byte1_bit6(self):
+        self.assertEqual(self.tlv._parse_tvr('2000000000'), 'Byte 1: [00100000]\n                                ICC data missing: [1]\n')
+
+    def test_tlv_parse_tvr_byte1_bit5(self):
+        self.assertEqual(self.tlv._parse_tvr('1000000000'), 'Byte 1: [00010000]\n                  Card number appears on hotlist: [1]\n')
+
+    def test_tlv_parse_tvr_byte1_bit4(self):
+        self.assertEqual(self.tlv._parse_tvr('0800000000'), 'Byte 1: [00001000]\n                                      DDA failed: [1]\n')
+
+    def test_tlv_parse_tvr_byte1_bit3(self):
+        self.assertEqual(self.tlv._parse_tvr('0400000000'), 'Byte 1: [00000100]\n                                      CDA failed: [1]\n')
+
+    def test_tlv_parse_tvr_byte1_bit2(self):
+        self.assertEqual(self.tlv._parse_tvr('0200000000'), 'Byte 1: [00000010]\n                                SDA was selected: [1]\n')
+
+    def test_tlv_parse_tvr_byte1_bit1(self):
+        self.assertEqual(self.tlv._parse_tvr('0100000000'), 'Byte 1: [00000001]\n                                             RFU: [1]\n')
+
+    def test_tlv_parse_tvr_byte1_bit3_and_bit4(self):
+        self.assertEqual(self.tlv._parse_tvr('0C00000000'), 'Byte 1: [00001100]\n                                      CDA failed: [1]\n                                      DDA failed: [1]\n')
+
 
 class TestTLVCustomTagsList(unittest.TestCase):
     def setUp(self):

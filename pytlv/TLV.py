@@ -252,7 +252,7 @@ class TLV:
 		desc_column_width = 48
 
 		tvr_bit_names = {
-			1: ['RFU', 'Now SDA was selected', 'CDA failed', 'DDA failed', 'Card number appears on hotlist', 'ICC data missing', 'SDA failed', 'Offline data processing was not performed'],
+			1: ['RFU', 'SDA was selected', 'CDA failed', 'DDA failed', 'Card number appears on hotlist', 'ICC data missing', 'SDA failed', 'Offline data processing was not performed'],
 		}
 
 		for byte in range(1, 6):
