@@ -186,7 +186,7 @@ class TLV:
 			self.tags = emv_tags
 
 		self.tlv_string = ''
-		
+
 		self.tag_lengths = set()
 		for tag, tag_name in self.tags.items():
 			self.tag_lengths.add(len(tag))
@@ -197,21 +197,34 @@ class TLV:
 		"""
 		parsed_data = OrderedDict()
 		self.tlv_string = tlv_string
-
 		i = 0
-		while i < len(self.tlv_string): 
+		while i < len(self.tlv_string):
 			tag_found = False
-
 			for tag_length in self.tag_lengths:
 				for tag, tag_name in self.tags.items():
 					if self.tlv_string[i:i+tag_length] == tag:
 						try:
-							value_length = int(self.tlv_string[i+tag_length:i+tag_length+2], 16)
+							offset = 2
+							_val_length = self.tlv_string[i+tag_length:i+tag_length+2]
+
+							if _val_length == '81':
+								offset +=2
+								value_length = int(self.tlv_string[i+tag_length:i+tag_length+offset][2:], 16)
+							elif _val_length == '82':
+								offset += 4
+								value_length = int(self.tlv_string[i + tag_length:i + tag_length + offset][4:], 16)
+
+							elif _val_length == '83':
+								offset += 4
+								value_length = int(self.tlv_string[i + tag_length:i + tag_length + offset][6:], 16)
+							else:
+								value_length = int(_val_length, 16)
+
 						except ValueError:
 							raise ValueError('Parse error: tag ' + tag + ' has incorrect data length')
 
-						value_start_position = i+tag_length+2
-						value_end_position = i+tag_length+2+value_length*2
+						value_start_position = i+tag_length+offset
+						value_end_position = i+tag_length+offset+value_length*2
 
 						if value_end_position > len(self.tlv_string):
 							raise ValueError('Parse error: tag ' + tag + ' declared data of length ' + str(value_length) + ', but actual data length is ' + str(int(len(self.tlv_string[value_start_position-1:-1])/2)))
@@ -227,6 +240,15 @@ class TLV:
 				raise ValueError(msg)
 		return parsed_data
 
+	def compute_tag_length(self, length:int):
+		if length <= 128:
+			return hexify(length)
+		if 128 < length <= 255:
+			return '81'+hexify(length)
+		elif 255 < length <= 65535:
+			return '82'+hexify(length)
+		else:
+			return '83'+hexify(length)
 
 	def build(self, data_dict):
 		"""
@@ -239,7 +261,7 @@ class TLV:
 			if divmod(len(value), 2)[1] == 1:
 				raise ValueError('Invalid value length - the length must be even')
 
-			self.tlv_string = self.tlv_string + tag.upper() + hexify(len(value) / 2) + value.upper()
+			self.tlv_string = self.tlv_string + tag.upper() + self.compute_tag_length(len(value) // 2) + value.upper()
 
 		return self.tlv_string
 
@@ -263,7 +285,7 @@ class TLV:
 			if byte_value > 0:
 				byte_value_binary = '{0:b}'.format(byte_value).rjust(8, '0')
 				tvr_dump = tvr_dump + '\n' + left_indent + 'Byte {}: [{}]\n'.format(byte, byte_value_binary)
-				
+
 				for j in range(0, 8):
 					if (byte_value >> j & 1) == 1:
 						tvr_dump = tvr_dump + left_indent + tvr_bit_names[byte][j][:desc_column_width].rjust(desc_column_width, ' ') + ': [1]\n'
