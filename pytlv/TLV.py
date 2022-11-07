@@ -197,7 +197,6 @@ class TLV:
 		"""
 		parsed_data = OrderedDict()
 		self.tlv_string = tlv_string
-		print(tlv_string)
 		i = 0
 		while i < len(self.tlv_string):
 			tag_found = False
